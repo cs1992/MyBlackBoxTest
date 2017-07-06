@@ -32,7 +32,6 @@ public class MailDataDto {
     private String receivedTime;
     private String remindAt;
     private String securityLevel;
-    private String sentTime;
     private String size;
     private String spamType;
     private String status;
@@ -235,13 +234,6 @@ public class MailDataDto {
 	this.securityLevel = securityLevel;
     }
 
-    public String getSentTime() {
-	return sentTime;
-    }
-
-    public void setSentTime(String sentTime) {
-	this.sentTime = sentTime;
-    }
 
     public String getSize() {
 	return size;
@@ -418,7 +410,7 @@ public class MailDataDto {
 	receivedTime = String.valueOf(field.get(ConstanceValue.MailDataParam.RECEIVE_TIME.param));
 	remindAt = String.valueOf(field.get(ConstanceValue.MailDataParam.REMIND_AT.param));
 	securityLevel = String.valueOf(field.get(ConstanceValue.MailDataParam.SECURITY_LEVEL.param));
-	sentTime = String.valueOf(field.get(ConstanceValue.MailDataParam.SEND_TIME.param));
+	sendTime = String.valueOf(field.get(ConstanceValue.MailDataParam.SEND_TIME.param));
 	size = String.valueOf(field.get(ConstanceValue.MailDataParam.SIZE.param));
 	spamType = String.valueOf(field.get(ConstanceValue.MailDataParam.SPAM_TYPE.param));
 	status = String.valueOf(field.get(ConstanceValue.MailDataParam.STATUS.param));
@@ -431,7 +423,6 @@ public class MailDataDto {
 	setToList(String.valueOf(field.get(ConstanceValue.MailDataParam.TO_LIST.param)));
 	toMe = String.valueOf(field.get(ConstanceValue.MailDataParam.TO_ME.param));
 	unreadThreadCount = String.valueOf(field.get(ConstanceValue.MailDataParam.UNREAD_THREAD_COUNT.param));
-	sendTime = String.valueOf(ConstanceValue.MailDataParam.SEND_TIME);
     }
 
     @Override
@@ -440,7 +431,7 @@ public class MailDataDto {
 	StringBuilder value = new StringBuilder();
 
 	for (MailDataParam param : MailDataParam.values()) {
-	    str.append("\t" + param + " : ");
+	    str.append("\t" + param.param + " : ");
 	    switch(param) {
 	    case ATTACH_COUNT:
 		value.append(attachCount);
@@ -539,7 +530,7 @@ public class MailDataDto {
 		int size = toArrayList.size();
 		
 		for(int i = 0; i < size; i++) {
-		    value.append(toArrayList.get(i));
+		    value.append(toArrayList.get(i).toString());
 		}
 		break;
 	    case TO_ME:
@@ -551,7 +542,10 @@ public class MailDataDto {
 		default:
 		    value.append("null");
 	    }
+	    
 	    str.append(value + "\n");
+
+	    value = new StringBuilder();
 	}
 
 	return str.toString();

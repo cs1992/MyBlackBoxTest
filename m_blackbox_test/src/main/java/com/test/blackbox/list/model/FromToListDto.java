@@ -50,6 +50,7 @@ public class FromToListDto {
 	    }
 
 	    str.append(value + "\n");
+	    value = new StringBuilder();
 	}
 
 	return str.toString();

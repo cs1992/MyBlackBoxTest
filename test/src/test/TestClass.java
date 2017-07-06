@@ -3,6 +3,7 @@ package test;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -20,165 +21,200 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import util.ConstanceValue.FromAndToListParam;
+import util.ConstanceValue;
+import util.ConstanceValue.APIs;
+import util.ConstanceValue.FromToListParam;
 import util.ConstanceValue.MailDataParam;
-import util.ConstanceValue.MailResponseParam;
-
+import util.ConstanceValue.MailListParam;
 
 public class TestClass {
 
-	public static String url = "http://testapi.mail.naver.com/external/testapi?url=/json/list";
-//	public static String url = "http://testapi.mail.naver.com/external/testapi?url=/json/read";
-	public static JSONParser parser = new JSONParser();
-	public static ObjectMapper mapper = new ObjectMapper();
+    public static String url = "http://testapi.mail.naver.com/external/testapi?url=/json/list?folderSN=-1&";
+    public static JSONParser parser = new JSONParser();
+    public static ObjectMapper mapper = new ObjectMapper();
 
+//    public static void main(String[] args) {
+//	try {
+//	    // URI uri = new URI(ConstanceValue.API_URL + APIs.LIST.api);
+//	    URI uri = new URI(url);
+//	    // add parameter
+//	    // uri = new URIBuilder().addParameter("aaa", "aaaa").addParameter("bbbb",
+//	    // "bbbb").build();
+//
+//	    HttpClient httpClient = HttpClientBuilder.create().build();
+//	    HttpResponse response = httpClient.execute(new HttpGet(uri));
+//	    HttpEntity entity = response.getEntity();
+//
+//	    String content = EntityUtils.toString(entity);
+//	    System.out.println(content);
+//
+//	    JSONObject object = (JSONObject) parser.parse(content);
+//
+//	    String paramName;
+//	    String paramContent;
+//
+//	    displayMailList(object);
+//	    MailListResponseDto mailListDto = new MailListResponseDto();
+//	    mailListDto.setField(object);
+//	    System.out.println(mailListDto);
+//
+//	} catch (URISyntaxException e) {
+//	    // TODO Auto-generated catch block
+//	    e.printStackTrace();
+//	} catch (ClientProtocolException e) {
+//	    // TODO Auto-generated catch block
+//	    e.printStackTrace();
+//	} catch (IOException e) {
+//	    // TODO Auto-generated catch block
+//	    e.printStackTrace();
+//	} catch (ParseException e) {
+//	    // TODO Auto-generated catch block
+//	    e.printStackTrace();
+//	}
+//    }
+    
+    public static void main(String[] args) {
+	MailListRequest request = new MailListRequestImpl();
+	ArrayList<MailList> list = request.requestAllList();
+	System.out.println(list.size());
+	
+//	TestList testList = new TestListImpl();
+//	testList.testSameRequest(100);
+	
+	
+    }
 
+    public static void displayMailList(JSONObject object) throws ParseException, JsonProcessingException, IOException {
+	String paramName;
+	String paramContent;
 
-	public static void main(String[] args) {
-		try {
-			URI uri = new URI(url);
-			// add parameter
-			// uri = new URIBuilder().addParameter("aaa", "aaaa").addParameter("bbbb",
-			// "bbbb").build();
+	for (MailListParam param : MailListParam.values()) {
+	    paramName = param.param;
+	    paramContent = String.valueOf(object.get(paramName));
 
-			HttpClient httpClient = HttpClientBuilder.create().build();
-			HttpResponse response = httpClient.execute(new HttpGet(uri));
-			HttpEntity entity = response.getEntity();
+	    if (MailListParam.MAIL_DATA.param.equals(paramName)) {
+		displayMailData((Object) object.get(paramName), 1);
+	    } else {
+		System.out.println(paramName + " : " + paramContent);
+	    }
+	}
+    }
 
-			String content = EntityUtils.toString(entity);
-			System.out.println(content);
-		
-			JSONObject object = (JSONObject) parser.parse(content);
+    public static void displayMailData(Object mailData, int tab)
+	    throws ParseException, JsonProcessingException, IOException {
+	String paramName;
+	String paramContent;
+	JSONObject object;
+	StringBuilder tabB = new StringBuilder();
 
-			String paramName;
-			String paramContent;
-
-			displayMailList(object);
-			MailListDto mailListDto = new MailListDto();
-			mailListDto.setField(object);
-//			System.out.println(mailListDto);
-
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	for (int i = 0; i < tab; i++) {
+	    tabB.append("  ");
 	}
 
-	public static void displayMailList(JSONObject object) throws ParseException, JsonProcessingException, IOException {
-		String paramName;
-		String paramContent;
+	// System.out.println(mailData);
+	// System.out.println("mailData : " +
+	// mapper.readTree(mailData.toString()).isArray());
+	JSONArray array = (JSONArray) mailData;
 
-		for (MailResponseParam param : MailResponseParam.values()) {
-			paramName = param.param;
-			paramContent = String.valueOf(object.get(paramName));
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	int size = array.size();
+	for (int i = 0; i < size; i++) {
 
-			if (MailResponseParam.MAIL_DATA.param.equals(paramName)) {
-				displayMailData((Object) object.get(paramName), 1);
-			} else {
-				System.out.println(paramName + " : " + paramContent);
-			}
-		}
-	}
+	    System.out.println();
+	    System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-");
+	    System.out.println();
+	    object = (JSONObject) array.get(i);
 
-	public static void displayMailData(Object mailData, int tab)
-			throws ParseException, JsonProcessingException, IOException {
-		String paramName;
-		String paramContent;
-		JSONObject object;
-		StringBuilder tabB = new StringBuilder();
+	    for (MailDataParam param : MailDataParam.values()) {
+		paramName = param.param;
+		paramContent = String.valueOf(object.get(paramName));
 
-		for (int i = 0; i < tab; i++) {
-			tabB.append("  ");
-		}
+		// System.out.println(paramContent);
 
-//		System.out.println(mailData);
-//		System.out.println("mailData : " + mapper.readTree(mailData.toString()).isArray());
-		JSONArray array = (JSONArray) mailData;
-
-		int size = array.size();
-		for (int i = 0; i < size; i++) {
-
-			System.out.println();
-			System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-");
-			System.out.println();
-			object = (JSONObject) array.get(i);
-
-			for (MailDataParam param : MailDataParam.values()) {
-				paramName = param.param;
-				paramContent = String.valueOf(object.get(paramName));
-
-				// System.out.println(paramContent);
-
-				if (param.equals(MailDataParam.TO_LIST) || param.equals(MailDataParam.FROM)) {
-//					System.out.println("===" + paramName);
-					// JSONArray jsonArray = (JSONArray) object.get(paramName);
-					displayFromToList(object.get(paramName), tab + 1);
-				} else {
-					System.out.println(tabB.toString() + paramName + " : " + paramContent);
-				}
-			}
-
-			System.out.println();
-			System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-");
-			System.out.println();
-		}
-
-	}
-
-	public static void displayFromToList(Object fromToList, int tab)
-			throws ParseException, JsonProcessingException, IOException {
-		String paramName;
-		String paramContent;
-		JSONObject object;
-		StringBuilder tabB = new StringBuilder();
-
-		for (int i = 0; i < tab; i++) {
-			tabB.append("  ");
-		}
-
-		if (mapper.readTree(fromToList.toString()).isArray()) {
-
-//			System.out.println("tolist");
-			JSONArray array = (JSONArray) fromToList;
-			int size = array.size();
-
-			for (int i = 0; i < size; i++) {
-				object = (JSONObject) array.get(i);
-
-				for (FromAndToListParam param : FromAndToListParam.values()) {
-					paramName = param.param;
-					paramContent = String.valueOf(object.get(paramName));
-
-					System.out.println(tabB.toString() + paramName + " : " + paramContent);
-
-				}
-
-			}
-
+		if (param.equals(MailDataParam.TO_LIST) || param.equals(MailDataParam.FROM)) {
+		    // System.out.println("===" + paramName);
+		    // JSONArray jsonArray = (JSONArray) object.get(paramName);
+		    displayFromToList(object.get(paramName), tab + 1);
 		} else {
-
-//			System.out.println("from");
-			object = (JSONObject) fromToList;
-			for (FromAndToListParam param : FromAndToListParam.values()) {
-				paramName = param.param;
-				paramContent = String.valueOf(object.get(paramName));
-
-				System.out.println(tabB.toString() + paramName + " : " + paramContent);
-
-			}
+		    System.out.println(tabB.toString() + paramName + " : " + paramContent);
 		}
+	    }
+
+	    System.out.println();
+	    System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-");
+	    System.out.println();
 	}
 
-	public static boolean isJSONArray(Object obj) {
-		return obj instanceof JSONArray;
+    }
+
+    public static void displayFromToList(Object fromToList, int tab)
+	    throws ParseException, JsonProcessingException, IOException {
+	String paramName;
+	String paramContent;
+	JSONObject object;
+	StringBuilder tabB = new StringBuilder();
+
+	for (int i = 0; i < tab; i++) {
+	    tabB.append("  ");
 	}
+
+	if (mapper.readTree(fromToList.toString()).isArray()) {
+
+	    // System.out.println("tolist");
+	    JSONArray array = (JSONArray) fromToList;
+	    int size = array.size();
+
+	    for (int i = 0; i < size; i++) {
+		object = (JSONObject) array.get(i);
+
+		for (FromToListParam param : FromToListParam.values()) {
+		    paramName = param.param;
+		    paramContent = String.valueOf(object.get(paramName));
+
+		    System.out.println(tabB.toString() + paramName + " : " + paramContent);
+
+		}
+
+	    }
+
+	} else {
+
+	    // System.out.println("from");
+	    object = (JSONObject) fromToList;
+	    for (FromToListParam param : FromToListParam.values()) {
+		paramName = param.param;
+		paramContent = String.valueOf(object.get(paramName));
+
+		System.out.println(tabB.toString() + paramName + " : " + paramContent);
+
+	    }
+	}
+    }
+
+    public static boolean isJSONArray(Object obj) {
+	return obj instanceof JSONArray;
+    }
 }

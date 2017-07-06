@@ -18,7 +18,7 @@ import org.json.simple.parser.ParseException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.test.blackbox.list.model.MailListDto;
+import com.test.blackbox.list.model.MailListResponseDto;
 import com.test.blackbox.util.ConstanceValue.FromAndToListParam;
 import com.test.blackbox.util.ConstanceValue.MailDataParam;
 import com.test.blackbox.util.ConstanceValue.MailResponseParam;
@@ -53,7 +53,7 @@ public class ListTest {
 	    String paramContent;
 
 	    displayMailList(object);
-	    MailListDto mailListDto = new MailListDto();
+	    MailListResponseDto mailListDto = new MailListResponseDto();
 	    mailListDto.setField(object);
 	    System.out.println(mailListDto);
 

@@ -1,14 +1,17 @@
 package util;
 
 public class ConstanceValue {
-    public static enum MailResponseParam {
+
+    public static final String API_URL = "http://testapi.mail.naver.com/external/testapi?url=";
+
+    public static enum MailListParam {
 	MESSAGE("message"), RESULT("result"), CURRENT_TIMe("currentTime"), FOLDER_NAME("folderName"), LAST_OFFSET(
 		"lastOffset"), LAST_PAGE("lastPage"), LIST_COUNT("listCount"), MAIL_DATA(
 			"mailData"), PAGE_SIZE("pageSize"), TOTAL_COUNT("totalCount"), UNREAD_COUNT("unreadCount");
 
 	public String param;
 
-	MailResponseParam(String param) {
+	MailListParam(String param) {
 	    this.param = param;
 	}
     }
@@ -39,12 +42,12 @@ public class ConstanceValue {
 	}
     }
 
-    public static enum FromAndToListParam {
+    public static enum FromToListParam {
 	EMAIL("email"), NAME("name");
 
 	public String param;
 
-	FromAndToListParam(String param) {
+	FromToListParam(String param) {
 	    this.param = param;
 	}
     }
@@ -58,5 +61,31 @@ public class ConstanceValue {
 	    this.api = api;
 	}
     }
+
+    public static enum ListRequestParam {
+	PAGE("page="), SORT_FIELD("sortField="), SORT_TYPE("sortType="), FOLDER_SN("folderSN="), TYPE("type="), IS_Unread(
+		"isUnread="), VIEW_MODE(
+			"viewMode="), START_OFFSET("startOffset="), PAGE_SIZE_4_SEE_MORE("pageSize4SeeMore="), U("u=");
+
+	public String param;
+
+	ListRequestParam(String param) {
+	    this.param = param;
+	}
+    }
+    
+//    public static enum FolderSNValue{
+//	ALL(-1), RECEIVE(0),  SEND(1), TEMPORARY(3), MEMO(6), SPAM(5), WASTE(4), 
+//    }
+    public static enum ListType{
+	ALL(0), RECEIVE(1),  SEND(2), TEMPORARY(3), MEMO(4), SPAM(5), WASTE(6), IMPORTANT(7), RECEIVE_PERSON(8);
+	
+	public int value;
+	
+	ListType(int value){
+	    this.value = value;
+	}
+    }
+
 
 }
