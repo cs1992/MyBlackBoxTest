@@ -1,12 +1,14 @@
 package test;
 
+import java.util.HashMap;
+
 public class TestListResult {
-    MailMap isNotSame;
-    MailMap isNull;
+    HashMap<String, Object> isNotSame;
+    HashMap<String, Object> isNull;
     
     public TestListResult() {
-	isNotSame = new MailMap();
-	isNull = new MailMap();
+	isNotSame = new HashMap<String, Object>();
+	isNull = new HashMap<String, Object>();
     }
 
 }

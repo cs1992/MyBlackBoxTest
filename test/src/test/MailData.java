@@ -1,6 +1,7 @@
 package test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.json.simple.JSONArray;
@@ -10,17 +11,17 @@ import util.ConstanceValue.MailDataParam;
 
 public class MailData {
 
-    MailMap mailData;
+    HashMap<String, Object> mailData;
     FromToList from;
     ArrayList<FromToList> toList;
 
     public MailData() {
-	mailData = new MailMap();
+	mailData = new HashMap<String, Object>();
 	from = new FromToList();
 	toList = new ArrayList<>();
     }
 
-    public MailMap getMailData() {
+    public HashMap<String, Object> getMailData() {
 	return mailData;
     }
 

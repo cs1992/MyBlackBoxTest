@@ -41,7 +41,7 @@ public class MailListRequestImpl implements MailListRequest {
 	    for (ListType type : ListType.values()) {
 		listParam.setParam(type);
 		uri = new URI(url + listParam.toString());
-		System.out.println("\n" + type.name() + " : " + uri.toString() + " ##################################");
+		System.out.println("\n" + type.name() + " : " + uri.toString());
 		response = httpClient.execute(new HttpGet(uri));
 		entity = response.getEntity();
 		responseStr = EntityUtils.toString(entity);

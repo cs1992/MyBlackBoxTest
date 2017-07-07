@@ -1,5 +1,6 @@
 package test;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.json.simple.JSONObject;
@@ -7,13 +8,13 @@ import org.json.simple.JSONObject;
 import util.ConstanceValue.FromToListParam;
 
 public class FromToList {
-    MailMap field;
+    HashMap<String, Object> field;
     
     public FromToList() {
-	field = new MailMap();
+	field = new HashMap<String, Object>();
     }
 
-    public MailMap getField() {
+    public HashMap<String, Object> getField() {
 	return field;
     }
 

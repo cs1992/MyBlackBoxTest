@@ -2,6 +2,7 @@ package test;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,19 +16,19 @@ import util.ConstanceValue.MailListParam;
 
 public class MailList {
 
-    MailMap mailList;
+    HashMap<String, Object> mailList;
     ArrayList<MailData> mailDataList;
 
     public MailList() {
-	mailList = new MailMap();
+	mailList = new HashMap<String, Object>();
 	mailDataList = new ArrayList<>();
     }
 
-    public MailMap getMailList() {
+    public HashMap<String, Object> getMailList() {
 	return mailList;
     }
 
-    public void setMailList(MailMap mailList) {
+    public void setMailList(HashMap<String, Object> mailList) {
 	this.mailList = mailList;
     }
 
